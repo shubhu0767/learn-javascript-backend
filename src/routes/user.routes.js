@@ -2,6 +2,8 @@ import { Router } from "express";
 import {
   changeCurrentPassword,
   getCurrentUser,
+  getUserChannelProfile,
+  getWatchHistory,
   logOutUser,
   loginUser,
   refreshAccessToken,
@@ -9,7 +11,6 @@ import {
   updateUserDetails,
 } from "../controllers/user.controller.js";
 import { upload } from "../midlewares/multar.middleware.js";
-import { getTrendingMovies } from "../controllers/movie.controller.js";
 import { verifyJWT } from "../midlewares/auth.middleware.js";
 
 const router = Router();
@@ -22,7 +23,6 @@ router.route("/register").post(
   registerUser
 );
 router.route("/login").post(loginUser);
-// router.route('/movie').get(getTrendingMovies)
 
 // secured routes
 router.route("/logOut").post(verifyJWT, logOutUser);
@@ -37,5 +37,8 @@ router.route("/updateUserDetails").post(
   ]),
   updateUserDetails
 );
+
+router.route("/getUserChannelProfile").get(verifyJWT, getUserChannelProfile);
+router.route("/getWatchHistory").get(verifyJWT, getWatchHistory);
 
 export default router;
